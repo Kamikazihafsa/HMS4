@@ -1,0 +1,121 @@
+/* Wards & Beds page specific styles */
+
+/* Ward card styles */
+.ward-card {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.ward-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.ward-card .card-header {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.bed-list {
+    font-size: 0.9rem;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.ward-actions {
+    display: flex;
+    justify-content: center;
+}
+
+/* List view styles */
+.table th {
+    font-weight: 600;
+    color: #555;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table .bed-list {
+    margin-bottom: 0;
+}
+
+/* View toggle buttons */
+.btn-group .btn {
+    transition: all 0.3s ease;
+}
+
+.btn-group .btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.btn-group .btn:not(.active) {
+    background-color: #fff;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-group .btn:hover:not(.active) {
+    background-color: rgba(var(--primary-color), 0.1);
+}
+
+/* Modal styles */
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Ward title in modal */
+.ward-title {
+    margin-bottom: 5px;
+}
+
+/* Search and filter section */
+.card {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Badge styles based on status */
+.badge.bg-success {
+    background-color: #198754 !important;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* Pagination styling */
+.pagination .page-link {
+    color: var(--primary-color);
+    border-radius: 5px;
+    margin: 0 2px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .ward-card {
+        margin-bottom: 1rem;
+    }
+    
+    .bed-list {
+        max-height: 100px;
+    }
+}

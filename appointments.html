@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Appointments - HMS</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/appointments.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row g-0">
+        <!-- Sidebar -->
+        <div id="sidebar-container" class="col-md-2 col-lg-2"></div>
+
+        <!-- Main Content Area -->
+        <div class="col-md-10 col-lg-10 ms-auto content">
+          <!-- Header -->
+          <div id="header-container"></div>
+
+          <!-- Main Content -->
+          <div id="page-content" class="p-4">
+            <!-- Appointments Header -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 flex-wrap">
+              <h2 class="page-title mb-2 mb-md-0">Appointment Management</h2>
+              <div class="d-flex flex-column flex-sm-row gap-2">
+                <div class="btn-group me-2" role="group" aria-label="View options">
+                  <button class="btn btn-outline-secondary" id="listViewBtn">
+                    <i class="fas fa-list me-1"></i> List
+                  </button>
+                  <button class="btn btn-outline-secondary active" id="gridViewBtn">
+                    <i class="fas fa-th me-1"></i> Grid
+                  </button>
+                </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAppointmentModal">
+                  <i class="fas fa-plus me-1"></i> Add New Appointment
+                </button>
+              </div>
+            </div>
+
+            <!-- Search & Filter Section -->
+            <div class="card mb-4">
+              <div class="card-body">
+                <form class="row g-3">
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="dateFilter"
+                        placeholder="Search by date..."
+                      />
+                      <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <select class="form-select" id="doctorFilter">
+                      <option value="">All Doctors</option>
+                      <option value="dr-johnson">Dr. Johnson Cindy</option>
+                      <option value="dr-kamikazi">Dr. Kamikazi</option>
+                      <option value="dr-nathan">Dr. Nathan</option>
+                      <option value="dr-daniel">Dr. Daniel</option>
+                      <option value="dr-lary">Dr. Lary</option>
+                      <option value="dr-bashira">Dr. bashira</option>
+                      <option value="dr-alex">Dr. Alex</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <select class="form-select" id="patientFilter">
+                      <option value="">All Patients</option>
+                      <option value="johnson-cindy">Johnson Cindy (P001)</option>
+                      <option value="marie-rose">Marie Rose(P002)</option>
+                      <option value="michael-kiggudu">Michael kiggudu (P003)</option>
+                      <option value="sarah-kakuku">Sarah kakuku (P004)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary w-100"
+                      id="filterBtn"
+                    >
+                      <i class="fas fa-filter me-1"></i> Filter
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Grid View -->
+            <div id="gridView" class="mb-4">
+              <div class="row">
+                <!-- Appointment Card 1 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card appointment-card h-100">
+                    <div class="appointment-status scheduled">
+                      <span class="badge bg-primary">Scheduled</span>
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">09:00 AM - Johnson Cindy</h5>
+                      <p class="text-muted mb-2">2025-03-10</p>
+                      <div class="appointment-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-user-md me-2"></i> Dr. Kamikazi
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-stethoscope me-2"></i> General Check-up
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark">Room 1</span>
+                        </p>
+                      </div>
+                      <div class="appointment-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewAppointmentModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editAppointmentModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Appointment Card 2 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card appointment-card h-100">
+                    <div class="appointment-status urgent">
+                      <span class="badge bg-danger">Urgent</span>
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">10:30 AM - Marie Rose</h5>
+                      <p class="text-muted mb-2">2025-03-10</p>
+                      <div class="appointment-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-user-md me-2"></i> Dr. Johnson Cindy
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas stethoscope me-2"></i> Cardiology Review
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark">Room 2</span>
+                        </p>
+                      </div>
+                      <div class="appointment-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewAppointmentModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editAppointmentModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Appointment Card 3 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card appointment-card h-100">
+                    <div class="appointment-status completed">
+                      <span class="badge bg-success">Completed</span>
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">11:45 AM - Josue T.</h5>
+                      <p class="text-muted mb-2">2025-03-09</p>
+                      <div class="appointment-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-user-md me-2"></i> Dr. Nathan
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-stethoscope me-2"></i> Orthopedic Follow-up
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark">Room 3</span>
+                        </p>
+                      </div>
+                      <div class="appointment-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewAppointmentModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editAppointmentModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Appointment Card 4 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card appointment-card h-100">
+                    <div class="appointment-status cancelled">
+                      <span class="badge bg-warning">Cancelled</span>
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">02:15 PM - prince junior</h5>
+                      <p class="text-muted mb-2">2025-03-10</p>
+                      <div class="appointment-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-user-md me-2"></i> Dr. Daniel
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-stethoscope me-2"></i> Pediatric Check-up
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark">Room 4</span>
+                        </p>
+                      </div>
+                      <div class="appointment-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewAppointmentModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editAppointmentModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <nav aria-label="Appointment navigation">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+              </nav>
+            </div>
+
+            <!-- List View (Hidden by Default) -->
+            <div id="listView" class="mb-4" style="display: none">
+              <div class="card">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                      <thead class="table-light">
+                        <tr>
+                          <th>Date</th>
+                          <th>Time</th>
+                          <th>Patient</th>
+                          <th>Doctor</th>
+                          <th>Type</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>2025-03-10</td>
+                          <td>09:00 AM</td>
+                          <td>John Smith (P001)</td>
+                          <td>Dr. Wilson</td>
+                          <td>General Check-up</td>
+                          <td><span class="badge bg-primary">Scheduled</span></td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewAppointmentModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editAppointmentModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2025-03-10</td>
+                          <td>10:30 AM</td>
+                          <td>Marie Rose (P002)</td>
+                          <td>Dr. Johnson Cindy</td>
+                          <td>Cardiology Review</td>
+                          <td><span class="badge bg-danger">Urgent</span></td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewAppointmentModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editAppointmentModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2025-03-09</td>
+                          <td>11:45 AM</td>
+                          <td>Josue T.</td>
+                          <td>Dr. Daniel</td>
+                          <td>Orthopedic Follow-up</td>
+                          <td><span class="badge bg-success">Completed</span></td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewAppointmentModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editAppointmentModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2025-03-10</td>
+                          <td>02:15 PM</td>
+                          <td>Prince junior</td>
+                          <td>Dr. Nathan</td>
+                          <td>Pediatric Check-up</td>
+                          <td><span class="badge bg-warning">Cancelled</span></td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewAppointmentModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editAppointmentModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination for List View -->
+              <nav aria-label="Appointment list navigation" class="mt-3">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div id="footer-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Appointment Modal -->
+    <div
+      class="modal fade"
+      id="addAppointmentModal"
+      tabindex="-1"
+      aria-labelledby="addAppointmentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addAppointmentModalLabel">Add New Appointment</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="addAppointmentForm">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="appointmentDate" class="form-label">Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="appointmentDate"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="appointmentTime" class="form-label">Time</label>
+                  <input
+                    type="time"
+                    class="form-control"
+                    id="appointmentTime"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="patient" class="form-label">Patient</label>
+                  <select class="form-select" id="patient" required>
+                    <option value="johnson-cindy">Johnson Cindy (P001)</option>
+                      <option value="marie-rose">Marie Rose(P002)</option>
+                      <option value="michael-kiggudu">Michael kiggudu (P003)</option>
+                      <option value="sarah-kakuku">Sarah kakuku (P004)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="doctor" class="form-label">Doctor</label>
+                  <select class="form-select" id="doctor" required>
+                    <option value="">Select Doctor</option>
+                    <option value="dr-johnson">Dr. Johnson Cindy</option>
+                    <option value="dr-kamikazi">Dr. Kamikazi</option>
+                    <option value="dr-nathan">Dr. Nathan</option>
+                    <option value="dr-daniel">Dr. Daniel</option>
+                    <option value="dr-lary">Dr. Lary</option>
+                    <option value="dr-bashira">Dr. bashira</option>
+                    <option value="dr-alex">Dr. Alex</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="type" class="form-label">Appointment Type</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="type"
+                    placeholder="e.g., Check-up"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="room" class="form-label">Room</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="room"
+                    placeholder="e.g., Room 1"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="status" class="form-label">Status</label>
+                  <select class="form-select" id="status" required>
+                    <option value="scheduled">Scheduled</option>
+                    <option value="urgent">Urgent</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="notes" class="form-label">Notes</label>
+                  <textarea
+                    class="form-control"
+                    id="notes"
+                    rows="3"
+                  ></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" id="saveAppointment">
+              Save Appointment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Appointment Modal -->
+    <div
+      class="modal fade"
+      id="viewAppointmentModal"
+      tabindex="-1"
+      aria-labelledby="viewAppointmentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewAppointmentModalLabel">Appointment Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-4 text-center mb-4">
+                <h4 class="appointment-title">09:00 AM - Johnson Cindy</h4>
+                <p class="text-muted">2025-03-10</p>
+                <span class="badge bg-primary mb-3">Scheduled</span>
+              </div>
+              <div class="col-md-8">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Doctor</h6>
+                    <p>Dr. Cindy T.</p>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Patient</h6>
+                    <p>johnson Cindy (P001)</p>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Type</h6>
+                    <p>General Check-up</p>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Room</h6>
+                    <p>Room 1</p>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <h6 class="fw-bold">Notes</h6>
+                  <p>Patient to bring previous medical records.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              data-bs-toggle="modal"
+              data-bs-target="#editAppointmentModal"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Appointment Modal -->
+    <div
+      class="modal fade"
+      id="editAppointmentModal"
+      tabindex="-1"
+      aria-labelledby="editAppointmentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editAppointmentModalLabel">Edit Appointment</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="editAppointmentForm">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editAppointmentDate" class="form-label">Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="editAppointmentDate"
+                    value="2025-03-10"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="editAppointmentTime" class="form-label">Time</label>
+                  <input
+                    type="time"
+                    class="form-control"
+                    id="editAppointmentTime"
+                    value="09:00"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editPatient" class="form-label">Patient</label>
+                  <select class="form-select" id="editPatient" required>
+                    <option value="">Select Patient</option>
+                    <option value="johnson-cindy" selected>Johnson Cindy (P001)</option>
+                    <option value="marie-rose">Marie Rose(P002)</option>
+                    <option value="michael-kiggudu">Michael kiggudu (P003)</option>
+                    <option value="sarah-kakuku">Sarah kakuku (P004)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="editDoctor" class="form-label">Doctor</label>
+                  <select class="form-select" id="editDoctor" required>
+                    <option value="">Select Doctor</option>
+                    <option value="dr-johnson" selected>Dr. Johnson Cindy</option>
+                    <option value="">Select Doctor</option>
+                    <option value="dr-kamikazi">Dr. Kamikazi</option>
+                    <option value="dr-nathan">Dr. Nathan</option>
+                    <option value="dr-daniel">Dr. Daniel</option>
+                    <option value="dr-lary">Dr. Lary</option>
+                    <option value="dr-bashira">Dr. bashira</option>
+                    <option value="dr-alex">Dr. Alex</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editType" class="form-label">Appointment Type</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editType"
+                    value="General Check-up"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="editRoom" class="form-label">Room</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editRoom"
+                    value="Room 1"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editStatus" class="form-label">Status</label>
+                  <select class="form-select" id="editStatus" required>
+                    <option value="scheduled" selected>Scheduled</option>
+                    <option value="urgent">Urgent</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="editNotes" class="form-label">Notes</label>
+                  <textarea
+                    class="form-control"
+                    id="editNotes"
+                    rows="3"
+                  >Patient to bring previous medical records.</textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" id="updateAppointment">
+              Update Appointment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/appointments.js"></script>
+  </body>
+</html>

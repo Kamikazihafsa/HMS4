@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctors - HMS</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/doctors.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row g-0">
+        <!-- Sidebar -->
+        <div id="sidebar-container" class="col-md-2 col-lg-2"></div>
+
+        <!-- Main Content Area -->
+        <div class="col-md-10 col-lg-10 ms-auto content">
+          <!-- Header -->
+          <div id="header-container"></div>
+
+          <!-- Main Content -->
+          <div id="page-content" class="p-4">
+            <!-- Doctors Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                <h2 class="page-title">Doctor Management</h2>
+                <div class="d-flex flex-column flex-sm-row gap-2">
+                    <div class="btn-group me-2" role="group" aria-label="View options">
+                        <button class="btn btn-outline-secondary" id="listViewBtn">
+                            <i class="fas fa-list me-1"></i> List
+                        </button>
+                        <button class="btn btn-outline-secondary active" id="gridViewBtn">
+                            <i class="fas fa-th me-1"></i> Grid
+                        </button>
+                    </div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
+                        <i class="fas fa-plus me-1"></i> Add New Doctor
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search & Filter Section -->
+            <div class="card mb-4">
+              <div class="card-body">
+                <form class="row g-3">
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Search doctors..."
+                      />
+                      <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <select class="form-select" id="specialtyFilter">
+                      <option value="">All Specialties</option>
+                      <option value="general-medicine">General Medicine</option>
+                      <option value="cardiology">Cardiology</option>
+                      <option value="neurology">Neurology</option>
+                      <option value="orthopedics">Orthopedics</option>
+                      <option value="pediatrics">Pediatrics</option>
+                      <option value="gynecology">Gynecology</option>
+                      <option value="dermatology">Dermatology</option>
+                      <option value="psychiatry">Psychiatry</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <select class="form-select" id="statusFilter">
+                      <option value="">All Statuses</option>
+                      <option value="available">Available</option>
+                      <option value="on-leave">On Leave</option>
+                      <option value="in-surgery">In Surgery</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary w-100"
+                      id="filterBtn"
+                    >
+                      <i class="fas fa-filter me-1"></i> Filter
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Grid View -->
+            <div id="gridView" class="mb-4">
+              <div class="row">
+                <!-- Doctor Card 1 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card doctor-card h-100">
+                    <div class="doctor-status available">
+                      <span class="badge bg-success">Available</span>
+                    </div>
+                    <div class="doctor-avatar">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/2785/2785482.png"
+                        alt="Dr. Wilson"
+                        class="img-fluid rounded-circle"
+                      />
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">Dr. Johnson Cindy</h5>
+                      <p class="text-muted mb-2">General Medicine</p>
+                      <div class="doctor-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-phone-alt me-2"></i> (555) 111-2222
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          johnson@hospital.com
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark"
+                            >12 Years Experience</span
+                          >
+                        </p>
+                      </div>
+                      <div class="doctor-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewDoctorModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editDoctorModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info">
+                          <i class="fas fa-calendar-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Doctor Card 2 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card doctor-card h-100">
+                    <div class="doctor-status available">
+                      <span class="badge bg-success">Available</span>
+                    </div>
+                    <div class="doctor-avatar">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/4532/4532452.png"
+                        alt="Dr. Johnson"
+                        class="img-fluid rounded-circle"
+                      />
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">Dr.kamikazi</h5>
+                      <p class="text-muted mb-2">Cardiology</p>
+                      <div class="doctor-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-phone-alt me-2"></i> (555) 222-3333
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          kamikazi@hospital.com
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark"
+                            >15 Years Experience</span
+                          >
+                        </p>
+                      </div>
+                      <div class="doctor-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewDoctorModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editDoctorModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info">
+                          <i class="fas fa-calendar-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Doctor Card 3 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card doctor-card h-100">
+                    <div class="doctor-status on-leave">
+                      <span class="badge bg-danger">On Leave</span>
+                    </div>
+                    <div class="doctor-avatar">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/3952/3952988.png"
+                        alt="Doctors"
+                        class="img-fluid rounded-circle"
+                      />
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">Dr. Michael kiggudu</h5>
+                      <p class="text-muted mb-2">Neurology</p>
+                      <div class="doctor-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-phone-alt me-2"></i> (555) 333-4444
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          michael@hospital.com
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark"
+                            >10 Years Experience</span
+                          >
+                        </p>
+                      </div>
+                      <div class="doctor-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewDoctorModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editDoctorModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info">
+                          <i class="fas fa-calendar-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Doctor Card 4 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card doctor-card h-100">
+                    <div class="doctor-status available">
+                      <span class="badge bg-success">Available</span>
+                    </div>
+                    <div class="doctor-avatar">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/3304/3304567.png"
+                        alt="Dr. Martinez"
+                        class="img-fluid rounded-circle"
+                      />
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">Dr. Sofia makurata</h5>
+                      <p class="text-muted mb-2">Orthopedics</p>
+                      <div class="doctor-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-phone-alt me-2"></i> (555) 444-5555
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          makurata@hospital.com
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark"
+                            >8 Years Experience</span
+                          >
+                        </p>
+                      </div>
+                      <div class="doctor-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewDoctorModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editDoctorModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info">
+                          <i class="fas fa-calendar-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Doctor Card 5 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card doctor-card h-100">
+                    <div class="doctor-status available">
+                      <span class="badge bg-success">Available</span>
+                    </div>
+                    <div class="doctor-avatar">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/9562/9562871.png"
+                        alt="Dr. kamikazi"
+                        class="img-fluid rounded-circle"
+                      />
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">Dr. Nathan</h5>
+                      <p class="text-muted mb-2">Pediatrics</p>
+                      <div class="doctor-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-phone-alt me-2"></i> (555) 555-6666
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          nathan@hospital.com
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark"
+                            >14 Years Experience</span
+                          >
+                        </p>
+                      </div>
+                      <div class="doctor-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewDoctorModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editDoctorModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info">
+                          <i class="fas fa-calendar-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Doctor Card 6 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card doctor-card h-100">
+                    <div class="doctor-status in-surgery">
+                      <span class="badge bg-warning">In Surgery</span>
+                    </div>
+                    <div class="doctor-avatar">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/921/921058.png"
+                        alt="Dr. Anderson"
+                        class="img-fluid rounded-circle"
+                      />
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">Dr. Lisa monica</h5>
+                      <p class="text-muted mb-2">Gynecology</p>
+                      <div class="doctor-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-phone-alt me-2"></i> (555) 666-7777
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          monica@hospital.com
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark"
+                            >11 Years Experience</span
+                          >
+                        </p>
+                      </div>
+                      <div class="doctor-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewDoctorModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editDoctorModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info">
+                          <i class="fas fa-calendar-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Doctor Card 7 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card doctor-card h-100">
+                    <div class="doctor-status available">
+                      <span class="badge bg-success">Available</span>
+                    </div>
+                    <div class="doctor-avatar">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/709/709043.png"
+                        alt="Dr. Thomas"
+                        class="img-fluid rounded-circle"
+                      />
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">Dr. James </h5>
+                      <p class="text-muted mb-2">Dermatology</p>
+                      <div class="doctor-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-phone-alt me-2"></i> (555) 777-8888
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          james@hospital.com
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark"
+                            >9 Years Experience</span
+                          >
+                        </p>
+                      </div>
+                      <div class="doctor-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewDoctorModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editDoctorModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info">
+                          <i class="fas fa-calendar-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Doctor Card 8 -->
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
+                  <div class="card doctor-card h-100">
+                    <div class="doctor-status available">
+                      <span class="badge bg-success">Available</span>
+                    </div>
+                    <div class="doctor-avatar">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/128/921/921130.png"
+                        alt="Dr. Rose"
+                        class="img-fluid rounded-circle"
+                      />
+                    </div>
+                    <div class="card-body text-center">
+                      <h5 class="card-title mb-1">Dr. Maria Garcia</h5>
+                      <p class="text-muted mb-2">Psychiatry</p>
+                      <div class="doctor-details mb-3">
+                        <p class="mb-1">
+                          <i class="fas fa-phone-alt me-2"></i> (555) 888-9999
+                        </p>
+                        <p class="mb-2">
+                          <i class="fas fa-envelope me-2"></i>
+                          rose@hospital.com
+                        </p>
+                        <p class="mb-0">
+                          <span class="badge bg-light text-dark"
+                            >7 Years Experience</span
+                          >
+                        </p>
+                      </div>
+                      <div class="doctor-actions">
+                        <button
+                          class="btn btn-sm btn-outline-primary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#viewDoctorModal"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="btn btn-sm btn-outline-secondary me-1"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editDoctorModal"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-info">
+                          <i class="fas fa-calendar-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <nav aria-label="Doctor navigation">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a
+                      class="page-link"
+                      href="#"
+                      tabindex="-1"
+                      aria-disabled="true"
+                      >Previous</a
+                    >
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <!-- List View (Hidden by Default) -->
+            <div id="listView" class="mb-4" style="display: none">
+              <div class="card">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                      <thead class="table-light">
+                        <tr>
+                          <th>ID</th>
+                          <th>Doctor Name</th>
+                          <th>Specialty</th>
+                          <th>Experience</th>
+                          <th>Phone</th>
+                          <th>Email</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>D001</td>
+                          <td>Dr. Johnson Cindy</td>
+                          <td>General Medicine</td>
+                          <td>12 Years</td>
+                          <td>(555) 111-2222</td>
+                          <td>johnson@hospital.com</td>
+                          <td>
+                            <span class="badge bg-success">Available</span>
+                          </td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewDoctorModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editDoctorModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-info">
+                                <i class="fas fa-calendar-alt"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>D002</td>
+                          <td>Dr. kamikazi</td>
+                          <td>Cardiology</td>
+                          <td>15 Years</td>
+                          <td>(555) 222-3333</td>
+                          <td>kamikazi@hospital.com</td>
+                          <td>
+                            <span class="badge bg-success">Available</span>
+                          </td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewDoctorModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editDoctorModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-info">
+                                <i class="fas fa-calendar-alt"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>D003</td>
+                          <td>Dr. Michael kiggudu</td>
+                          <td>Neurology</td>
+                          <td>10 Years</td>
+                          <td>(555) 333-4444</td>
+                          <td>kiggudu@hospital.com</td>
+                          <td><span class="badge bg-danger">On Leave</span></td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewDoctorModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editDoctorModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-info">
+                                <i class="fas fa-calendar-alt"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>D004</td>
+                          <td>Dr. Sofia makurata</td>
+                          <td>Orthopedics</td>
+                          <td>8 Years</td>
+                          <td>(555) 444-5555</td>
+                          <td>makurata@hospital.com</td>
+                          <td>
+                            <span class="badge bg-success">Available</span>
+                          </td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewDoctorModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editDoctorModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-info">
+                                <i class="fas fa-calendar-alt"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>D005</td>
+                          <td>Dr. David </td>
+                          <td>Pediatrics</td>
+                          <td>14 Years</td>
+                          <td>(555) 555-6666</td>
+                          <td>david@hospital.com</td>
+                          <td>
+                            <span class="badge bg-success">Available</span>
+                          </td>
+                          <td>
+                            <div class="btn-group">
+                              <button
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#viewDoctorModal"
+                              >
+                                <i class="fas fa-eye"></i>
+                              </button>
+                              <button
+                                class="btn btn-sm btn-outline-secondary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editDoctorModal"
+                              >
+                                <i class="fas fa-edit"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-info">
+                                <i class="fas fa-calendar-alt"></i>
+                              </button>
+                              <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination for List View -->
+              <nav aria-label="Doctor list navigation" class="mt-3">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a
+                      class="page-link"
+                      href="#"
+                      tabindex="-1"
+                      aria-disabled="true"
+                      >Previous</a
+                    >
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div id="footer-container">
+            <footer class="text-center py-3">
+              <p class="mb-0">
+                &copy; 2025 Hospital Management System. Icons by <a href="https://icons8.com">Icons8</a>.
+              </p>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Doctor Modal -->
+    <div
+      class="modal fade"
+      id="addDoctorModal"
+      tabindex="-1"
+      aria-labelledby="addDoctorModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addDoctorModalLabel">Add New Doctor</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="addDoctorForm">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstName"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastName"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="specialty" class="form-label">Specialty</label>
+                  <select class="form-select" id="specialty" required>
+                    <option value="">Select Specialty</option>
+                    <option value="general-medicine">General Medicine</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="neurology">Neurology</option>
+                    <option value="orthopedics">Orthopedics</option>
+                    <option value="pediatrics">Pediatrics</option>
+                    <option value="gynecology">Gynecology</option>
+                    <option value="dermatology">Dermatology</option>
+                    <option value="psychiatry">Psychiatry</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="experience" class="form-label"
+                    >Years of Experience</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="experience"
+                    min="0"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <input type="tel" class="form-control" id="phone" required />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="birthdate" class="form-label"
+                    >Date of Birth</label
+                  >
+                  <input type="date" class="form-control" id="birthdate" />
+                </div>
+                <div class="col-md-6">
+                  <label for="gender" class="form-label">Gender</label>
+                  <select class="form-select" id="gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="address" class="form-label">Address</label>
+                  <textarea
+                    class="form-control"
+                    id="address"
+                    rows="3"
+                  ></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label for="status" class="form-label">Status</label>
+                  <select class="form-select" id="status" required>
+                    <option value="available">Available</option>
+                    <option value="on-leave">On Leave</option>
+                    <option value="in-surgery">In Surgery</option>
+                  </select>
+                  <div class="mt-3">
+                    <label for="profileImage" class="form-label"
+                      >Profile Image</label
+                    >
+                    <input class="form-control" type="file" id="profileImage" />
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="qualifications" class="form-label"
+                  >Qualifications & Certifications</label
+                >
+                <textarea
+                  class="form-control"
+                  id="qualifications"
+                  rows="3"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" id="saveDoctor">
+              Save Doctor
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Doctor Modal -->
+    <div
+      class="modal fade"
+      id="viewDoctorModal"
+      tabindex="-1"
+      aria-labelledby="viewDoctorModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewDoctorModalLabel">
+              Doctor Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-4 text-center mb-4">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/128/2785/2785482.png"
+                  alt="Doctor Profile"
+                  class="img-fluid rounded-circle mb-3"
+                  style="max-width: 200px"
+                />
+                <h4 class="doctor-name">Dr. Johnson Cindy</h4>
+                <p class="text-muted">General Medicine</p>
+                <span class="badge bg-success mb-3">Available</span>
+              </div>
+              <div class="col-md-8">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Email</h6>
+                    <p>johnson@hospital.com</p>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Phone</h6>
+                    <p>(555) 111-2222</p>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Experience</h6>
+                    <p>12 Years</p>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Gender</h6>
+                    <p>Male</p>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Date of Birth</h6>
+                    <p>10/05/1975</p>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="fw-bold">Address</h6>
+                    <p>
+                      123 Medical Center Dr, Suite 456, Hospital City, HC 12345
+                    </p>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <h6 class="fw-bold">Qualifications & Certifications</h6>
+                  <p>
+                    MD, Internal Medicine, University Hospital (2008)<br />
+                    Board Certification in General Medicine<br />
+                    Fellowship in Community Health
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <h5 class="border-bottom pb-2">Schedule</h5>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>Day</th>
+                        <th>Morning</th>
+                        <th>Afternoon</th>
+                        <th>Evening</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Monday</td>
+                        <td>09:00 - 12:00</td>
+                        <td>14:00 - 17:00</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Tuesday</td>
+                        <td>09:00 - 12:00</td>
+                        <td>14:00 - 17:00</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Wednesday</td>
+                        <td>09:00 - 12:00</td>
+                        <td>-</td>
+                        <td>18:00 - 20:00</td>
+                      </tr>
+                      <tr>
+                        <td>Thursday</td>
+                        <td>09:00 - 12:00</td>
+                        <td>14:00 - 17:00</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Friday</td>
+                        <td>09:00 - 12:00</td>
+                        <td>14:00 - 17:00</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Saturday</td>
+                        <td>10:00 - 13:00</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Sunday</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              data-bs-toggle="modal"
+              data-bs-target="#editDoctorModal"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Doctor Modal -->
+    <div
+      class="modal fade"
+      id="editDoctorModal"
+      tabindex="-1"
+      aria-labelledby="editDoctorModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editDoctorModalLabel">Edit Doctor</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Same form as Add Doctor, but pre-filled -->
+            <form id="editDoctorForm">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editFirstName" class="form-label"
+                    >First Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editFirstName"
+                    value="John"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="editLastName" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editLastName"
+                    value="Wilson"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editSpecialty" class="form-label"
+                    >Specialty</label
+                  >
+                  <select class="form-select" id="editSpecialty" required>
+                    <option value="">Select Specialty</option>
+                    <option value="general-medicine" selected>
+                      General Medicine
+                    </option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="neurology">Neurology</option>
+                    <option value="orthopedics">Orthopedics</option>
+                    <option value="pediatrics">Pediatrics</option>
+                    <option value="gynecology">Gynecology</option>
+                    <option value="dermatology">Dermatology</option>
+                    <option value="psychiatry">Psychiatry</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="editExperience" class="form-label"
+                    >Years of Experience</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="editExperience"
+                    min="0"
+                    value="12"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editEmail" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="editEmail"
+                    value="wilson@hospital.com"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="editPhone" class="form-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="editPhone"
+                    value="(555) 111-2222"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editBirthdate" class="form-label"
+                    >Date of Birth</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="editBirthdate"
+                    value="1975-05-10"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="editGender" class="form-label">Gender</label>
+                  <select class="form-select" id="editGender">
+                    <option value="">Select Gender</option>
+                    <option value="male" selected>Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="editAddress" class="form-label">Address</label>
+                  <textarea class="form-control" id="editAddress" rows="3">
+123 Medical Center Dr, Suite 456, Hospital City, HC 12345</textarea
+                  >
+                </div>
+                <div class="col-md-6">
+                  <label for="editStatus" class="form-label">Status</label>
+                  <select class="form-select" id="editStatus" required>
+                    <option value="available" selected>Available</option>
+                    <option value="on-leave">On Leave</option>
+                    <option value="in-surgery">In Surgery</option>
+                  </select>
+                  <div class="mt-3">
+                    <label for="editProfileImage" class="form-label"
+                      >Change Profile Image</label
+                    >
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="editProfileImage"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="editQualifications" class="form-label"
+                  >Qualifications & Certifications</label
+                >
+                <textarea class="form-control" id="editQualifications" rows="3">
+MD, Internal Medicine, University Hospital (2008)
+Board Certification in General Medicine
+Fellowship in Community Health</textarea
+                >
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" id="updateDoctor">
+              Update Doctor
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/doctors.js"></script>
+  </body>
+</html>

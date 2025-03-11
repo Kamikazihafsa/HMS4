@@ -1,0 +1,47 @@
+/* Reports page specific styles */
+
+/* Report card styles */
+.report-card {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.report-card .card-header {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.chart-placeholder {
+    height: 150px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Filter section */
+.card {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .report-card {
+        margin-bottom: 1rem;
+    }
+    
+    #reportFilterForm .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
